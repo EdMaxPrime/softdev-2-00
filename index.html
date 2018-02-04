@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Work 0</title>
+    <style>
+      canvas {border: 1px solid #000;}
+    </style>
+  </head>
+  <body>
+    <h1>And this paddle game, but that's it!</h1>
+    <canvas id="draw" width="500" height="500"></canvas><br>
+    <input type="button" name="toggle" value="toggle">
+    <input type="button" name="clear" value="clear">
+    <script type="text/javascript">
+      var clearBtn = document.getElementsByName("clear")[0];
+      var toggleBtn = document.getElementsByName("toggle")[0];
+      var canvas = document.getElementById("draw");
+      var ctx = canvas.getContext("2d");
+      var shapeIsSquare = true;
+      ctx.fillStyle = "#82CAFF";
+    </script>
+  </body>
+</html>
