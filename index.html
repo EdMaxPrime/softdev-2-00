@@ -67,7 +67,6 @@
       canvas.addEventListener("click", function(evt) {
         var x = evt.offsetX;
         var y = evt.offsetY;
-        ctx.beginPath();
         if(shapeIsSquare == true) {
           ctx.rect(x-32, y-20, 64, 40);
         } else {
