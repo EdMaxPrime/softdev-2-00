@@ -3,17 +3,90 @@
   <head>
     <title>Work 0</title>
     <style>
+      .border {
+        border: 2px groove gold;
+        padding: 10px;
+        display: inline-block;
+        background-color: white;
+      }
       canvas {border: 1px solid #000;}
+      #msg {
+        display: inline-block;
+        float: right;
+      }
     </style>
   </head>
   <body>
-    <canvas id="draw" width="500" height="500"></canvas><br>
-    <input type="button" name="toggle" value="toggle">
-    <input type="button" name="clear" value="clear">
+    <h1>And this paddle game, but that's it!</h1>
+    <div class="border">
+      <canvas id="draw" width="500" height="500"></canvas><br>
+      <input type="button" name="toggle" value="toggle shape">
+      <input type="button" name="clear" value="clear canvas">
+      <span id="msg">You are drawing with rectangle</span>
+    </div>
+    <div class="border">
+      <b>Instructions:</b>
+      <ul>
+        <li>Click on the black bordered rectangle</li>
+        <li>The text in the bottom-right corner tells you the shape and color</li>
+        <li>Press the toggle button to switch shapes</li>
+        <li>Every time you draw a shape, you will switch colors</li>
+        <li>There are six colors</li>
+        <li>Press the clear canvas button to restart</li>
+      </ul>
+      <b>About the author:</b>
+      <ul>
+        <li>My favorite color here is #82CAFF</li>
+        <li>The color scheme reminds me of Blue's Clues</li>
+      </ul>
+    </div>
     <script type="text/javascript">
+      //variables********************
+      var clearBtn = document.getElementsByName("clear")[0];
+      var toggleBtn = document.getElementsByName("toggle")[0];
       var canvas = document.getElementById("draw");
+      var text = document.getElementById("msg");
       var ctx = canvas.getContext("2d");
-      
+      var shapeIsSquare = true;
+      var colorIndex = -1;
+      var colors = ["#82CAFF", "#CAFF82", "#FF82CA", "#CA82FF", "#FFCA82", "#82FFCA"];
+      //functions********************
+      var getShapeName = function() {
+        if(shapeIsSquare == true) return "rectangle";
+        else return "circle";
+      };
+      var nextColor = function() {
+        colorIndex++;
+        colorIndex = colorIndex % colors.length;
+        ctx.fillStyle = colors[colorIndex];
+      }
+      var updateMessage = function() {
+        text.innerHTML = "You are drawing with " + colors[colorIndex] + " " + getShapeName();
+      }
+      //listeners********************
+      canvas.addEventListener("click", function(evt) {
+        var x = evt.offsetX;
+        var y = evt.offsetY;
+        ctx.beginPath();
+        if(shapeIsSquare == true) {
+          ctx.rect(x-32, y-20, 64, 40);
+        } else {
+          ctx.arc(x, y, 25, 0, 2*Math.PI);
+        }
+        ctx.fill();
+        nextColor();
+        updateMessage();
+      });
+      toggleBtn.addEventListener("click", function() {
+        shapeIsSquare = !shapeIsSquare;
+        updateMessage();
+      });
+      clearBtn.addEventListener("click", function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+      //setup**************************
+      nextColor();
+      updateMessage();
     </script>
   </body>
 </html>
